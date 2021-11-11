@@ -1,0 +1,26 @@
+step "Deploy an Azure App Service" {
+    properties = {
+        Octopus.Action.TargetRoles = "WebApp"
+    }
+
+    action {
+        action_type = "Octopus.AzureAppService"
+        properties = {
+            Octopus.Action.Azure.DeploymentType = "Package"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "Octopus Server (built-in)"
+            Octopus.Action.Package.PackageId = "ArthurDent"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool_variable = ""
+
+        packages {
+            acquisition_location = "Server"
+            feed = "Octopus Server (built-in)"
+            package_id = "ArthurDent"
+            properties = {
+                SelectionMode = "immediate"
+            }
+        }
+    }
+}
